@@ -54,8 +54,8 @@ spec_test, ref_test = DS.data_setup(level_array, level_type, refTest_input, spec
 #spec_train, spec_test = DS.demean_and_normalize(spec_train, spec_test)
 
 # define params for running
-n_start = 60
-block_size = 10000
+n_start = 100
+block_size = 1000
 accuracy = 10
 
 # run
@@ -72,7 +72,7 @@ results = xr.Dataset(
         e_hist =(["half_levels", "blocks"], e_hist),
         e_test =(["half_levels", "blocks"], e_test),
         temps=(["blocks"], T_hist),
-        W = (["S"], W_best),
+        W = (["S"], W_best[0]),
         E = e_best,
         C = cost_best,
     ),
@@ -81,7 +81,7 @@ results = xr.Dataset(
     half_levels = spec_train.half_level.data,
     S = s_best,
     ),
-    attrs=dict(description="rerunning the ridge regression with alpha = 10-5 to check prediction problem."),
+    attrs=dict(description="rerunning the ridge regression with alpha = 10-5, with 60 rep wavenumbers."),
 ) 
 
 #results = xr.Dataset(
@@ -100,4 +100,4 @@ results = xr.Dataset(
 #)
 
 
-results.to_netcdf('10-5_rerun.h5')
+results.to_netcdf('Linear_100wn_shorterepoch.h5')

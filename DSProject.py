@@ -71,8 +71,8 @@ def compute_q_tilde(S, spectral_data, reference_data, num_hl, num_cols):
         w = np.empty((num_hl, len(S)))
 
         for i in range(num_hl):
-            #clf = LinearRegression()
-            clf = Ridge(alpha = 10**(-5))
+            clf = LinearRegression()
+            #clf = Ridge(alpha = 10**(-9))
             clf.fit(spectral_data.isel(wavenumber = S, half_level = i).data, reference_data.isel(half_level = i).data)
             w[i] = clf.coef_
             
